@@ -3,12 +3,12 @@ import cv2
 import mediapipe as mp 
 import time 
 
-# A1. Face Detection
+# A1. Display Video
 ##### A1.1 Read Video
 cap = cv2.VideoCapture("Videos/clip.wmv")
 
 
-# A2.1 
+# A2.1  Face Detection
 mpFaceDetection = mp.solutions.face_detection
 mpDraw = mp.solutions.drawing_utils
 faceDetection = mpFaceDetection.FaceDetection()
@@ -17,10 +17,15 @@ pTime = 0
 while True:
     success, img = cap.read()
 
-    # A2.1
+    # A2.1 Face Detection
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     results = faceDetection.process(imgRGB)
     print(results)
+
+    # A2.2 Display Detections 
+    if results.detections:
+        for id, detection in enumerate(results.detections):
+            print(id, detection)
 
     if(success):
         # cv2.waitKey(1)
